@@ -1,4 +1,5 @@
 // storage-adapter-import-placeholder
+import { resolve } from "node:path";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
@@ -44,4 +45,91 @@ export default buildConfig({
     payloadCloudPlugin(),
     // storage-adapter-placeholder
   ],
+  onInit: async (payload) => {
+    if (process.env.NODE_ENV === "development") {
+      const users = await payload.find({
+        collection: "users",
+      });
+
+      if (users.docs.length === 0) {
+        await payload.create({
+          collection: "users",
+          data: {
+            email: "admin@gmail.com",
+            password: "123",
+          },
+        });
+      }
+
+      const movies = await payload.find({
+        collection: "movies",
+      });
+
+      if (movies.docs.length === 0) {
+        const tag = await payload.create({
+          collection: "tags",
+          data: {
+            name: "Anime",
+          },
+        });
+        const tag2 = await payload.create({
+          collection: "tags",
+          data: {
+            name: "Horor",
+          },
+        });
+
+        const poster = await payload.create({
+          collection: "media",
+          filePath: resolve(
+            __dirname,
+            "../../../../src/modules/admin/stub/naruto.jpg",
+          ),
+          data: {
+            alt: "Naruto poster",
+          },
+        });
+
+        await payload.create({
+          collection: "movies",
+          data: {
+            name: "Naruto",
+            poster: poster.id,
+            tags: [
+              {
+                relationTo: "tags",
+                value: tag.id,
+              },
+            ],
+          },
+        });
+        await payload.create({
+          collection: "movies",
+          data: {
+            name: "Naruto 2",
+            poster: poster.id,
+            tags: [
+              {
+                relationTo: "tags",
+                value: tag.id,
+              },
+            ],
+          },
+        });
+        await payload.create({
+          collection: "movies",
+          data: {
+            name: "Naruto 3",
+            poster: poster.id,
+            tags: [
+              {
+                relationTo: "tags",
+                value: tag2.id,
+              },
+            ],
+          },
+        });
+      }
+    }
+  },
 });
