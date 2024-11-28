@@ -9,6 +9,7 @@ import sharp from "sharp";
 import { UsersCollection } from "@/modules/admin/collections/user";
 import { MediaCollection } from "@/modules/admin/collections/media";
 import { MoviesCollection } from "@/modules/admin/collections/movie";
+import { TagsCollection } from "@/modules/admin/collections/tag";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -20,7 +21,12 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [UsersCollection, MediaCollection, MoviesCollection],
+  collections: [
+    UsersCollection,
+    MediaCollection,
+    MoviesCollection,
+    TagsCollection,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {

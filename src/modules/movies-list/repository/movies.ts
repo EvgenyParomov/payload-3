@@ -1,4 +1,8 @@
-import { Media, Movie as PayloadMovie } from "@/modules/admin/payload-types";
+import {
+  Media,
+  Movie as PayloadMovie,
+  Tag,
+} from "@/modules/admin/payload-types";
 import { getAppPayload } from "@/shared/payload";
 import { Movie } from "../domain/movie";
 
@@ -18,7 +22,7 @@ function mapMovie(movie: PayloadMovie): Movie {
     title: movie.name,
     posterPath: mapMedia(movie.poster),
     rating: 10,
-    tags: [],
+    tags: movie.tags.map((tag) => (tag.value as Tag).name),
     isFavorite: false,
   };
 }
