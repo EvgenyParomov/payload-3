@@ -1,28 +1,43 @@
-import sharp from "sharp";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
-import { postgresAdapter } from "@payloadcms/db-postgres";
-import { buildConfig } from "payload";
-import { UserCollection } from "./collections/user";
+// storage-adapter-import-placeholder
+import {postgresAdapter} from '@payloadcms/db-postgres'
+import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import path from 'path'
+import { buildConfig } from 'payload'
+import { fileURLToPath } from 'url'
+import sharp from 'sharp'
+import {UsersCollection} from "@/modules/admin/collections/user";
+import {MediaCollection} from "@/modules/admin/collections/media";
+import {MoviesCollection} from "@/modules/admin/collections/movie";
+
+
+
+const filename = fileURLToPath(import.meta.url)
+const dirname = path.dirname(filename)
 
 export default buildConfig({
-  // If you'd like to use Rich Text, pass your editor here
+  admin: {
+    user: UsersCollection.slug,
+    importMap: {
+      baseDir: path.resolve(dirname),
+    },
+  },
+  collections: [UsersCollection, MediaCollection, MoviesCollection],
   editor: lexicalEditor(),
-
-  // Define and configure your collections in this array
-  collections: [UserCollection],
-
-  // Your Payload secret - should be a complex and secure string, unguessable
-  secret: process.env.PAYLOAD_SECRET || "",
-  // Whichever Database Adapter you're using should go here
-  // Mongoose is shown as an example, but you can also use Postgres
+  secret: process.env.PAYLOAD_SECRET || '',
+  typescript: {
+    outputFile: path.resolve(dirname, 'payload-types.ts'),
+  },
+  // database-adapter-config-start
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI,
-    },
+      connectionString: process.env.DATABASE_URI || '',
+    }
   }),
-  // If you want to resize images, crop, set focal point, etc.
-  // make sure to install it and pass it to the config.
-  // This is optional - if you don't need to do these things,
-  // you don't need it!
+  // database-adapter-config-end
   sharp,
-});
+  plugins: [
+    payloadCloudPlugin(),
+    // storage-adapter-placeholder
+  ],
+})
