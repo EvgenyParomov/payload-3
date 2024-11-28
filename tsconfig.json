@@ -20,9 +20,7 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@payload-config": [
-        "./src/modules/admin/payload.config.ts"
-      ]
+      "@payload-config": ["./src/modules/admin/payload.config.ts"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

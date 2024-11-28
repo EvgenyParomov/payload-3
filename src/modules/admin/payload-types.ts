@@ -101,8 +101,8 @@ export interface Media {
  */
 export interface Movie {
   id: number;
-  name?: string | null;
-  poster?: (number | null) | Media;
+  name: string;
+  poster: number | Media;
   updatedAt: string;
   createdAt: string;
 }
