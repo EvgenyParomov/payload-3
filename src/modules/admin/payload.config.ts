@@ -80,56 +80,56 @@ export default buildConfig({
           },
         });
 
-        // const poster = await payload.create({
-        //   collection: "media",
-        //   filePath: resolve(
-        //     __dirname,
-        //     "../../../../src/modules/admin/stub/naruto.jpg",
-        //   ),
-        //   data: {
-        //     alt: "Naruto poster",
-        //   },
-        // });
+        const poster = await payload.create({
+          collection: "media",
+          filePath: resolve(
+            __dirname,
+            "../../../../src/modules/admin/stub/naruto.jpg",
+          ),
+          data: {
+            alt: "Naruto poster",
+          },
+        });
 
-        // await payload.create({
-        //   collection: "movies",
-        //   data: {
-        //     name: "Naruto",
-        //     poster: poster.id,
-        //     tags: [
-        //       {
-        //         relationTo: "tags",
-        //         value: tag.id,
-        //       },
-        //     ],
-        //   },
-        // });
-        // await payload.create({
-        //   collection: "movies",
-        //   data: {
-        //     name: "Naruto 2",
-        //     poster: poster.id,
-        //     tags: [
-        //       {
-        //         relationTo: "tags",
-        //         value: tag.id,
-        //       },
-        //     ],
-        //   },
-        // });
-        // await payload.create({
-        //   collection: "movies",
-        //   data: {
-        //     name: "Naruto 3",
-        //     poster: poster.id,
-        //     tags: [
-        //       {
-        //         relationTo: "tags",
-        //         value: tag2.id,
-        //       },
-        //     ],
-        //   },
-        // });
+        await payload.create({
+          collection: "movies",
+          data: {
+            name: "Naruto",
+            poster: poster.id,
+            tags: [
+              {
+                relationTo: "tags",
+                value: tag.id,
+              },
+            ],
+          },
+        });
+        await payload.create({
+          collection: "movies",
+          data: {
+            name: "Naruto 2",
+            poster: poster.id,
+            tags: [
+              {
+                relationTo: "tags",
+                value: tag.id,
+              },
+            ],
+          },
+        });
+        await payload.create({
+          collection: "movies",
+          data: {
+            name: "Naruto 3",
+            poster: poster.id,
+            tags: [
+              {
+                relationTo: "tags",
+                value: tag2.id,
+              },
+            ],
+          },
+        });
       }
     }
   },
